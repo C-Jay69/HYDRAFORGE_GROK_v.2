@@ -11,6 +11,8 @@
   "dependencies": {
     "@types/recharts": "^1.8.29",
     "clsx": "2.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "recharts": "^3.7.0",
