@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import type { useDataStore, BlogPost } from '../../store/dataStore';
 
 interface Props {
@@ -25,6 +25,7 @@ export default function BlogManager({ store }: Props) {
   const [tagInput, setTagInput] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
   const [filter, setFilter] = useState<'all' | 'published' | 'draft'>('all');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const openNew = () => {
     setFormData({
@@ -49,6 +50,18 @@ export default function BlogManager({ store }: Props) {
     });
     setEditingId(post.id);
     setShowForm(true);
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        setFormData(prev => ({ ...prev, content }));
+      };
+      reader.readAsText(file);
+    }
   };
 
   const handleSave = () => {
